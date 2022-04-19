@@ -13,7 +13,7 @@ function App() {
     {
       id: 1,
       text: "Eat",
-      checked: true,
+      checked: true
     },
     {
       id: 2,
@@ -31,10 +31,21 @@ function App() {
     setTodos(todos.filter(todo => todo.id !== id));
   }
 
-  const editTodo = (id) => {    
-      setTodos(todos.map((todo) =>
-        todo.id === id ? {...todo, text: "하이"} : todo));
-      console.log(todos);    
+  const goActive = (id) => {  
+    setTodos(todos.map((todo) =>
+        todo.id === id ? {...todo, checked: false} : todo));
+  }
+
+  const goCompleted = (id) => {  
+    setTodos(todos.map((todo) =>
+        todo.id === id ? {...todo, checked: true} : todo));
+  }
+
+  const save = (id, text) => {
+    setTodos(todos.map((todo) =>
+        todo.id === id ? {...todo, text: text} : todo));
+      console.log(todos);
+      console.log("g");
   }
 
   function addButton(text) {
@@ -47,6 +58,7 @@ function App() {
         checked: false
       };
       setTodos(todos => todos.concat(todo));
+      console.log(todos);
       nextId++;
     }
   }
@@ -56,10 +68,7 @@ function App() {
     <div className='box'>      
       <h3>What needs to be done?</h3>
       <Add addButton={addButton}/>
-      <Look/>
-      <Form todoLength={todos.length}>
-        <TodoList todos={todos} deleteTodo={deleteTodo} editTodo={editTodo}/>
-      </Form>
+      <TodoList todos={todos} deleteTodo={deleteTodo} save={save} goActive={goActive} goCompleted={goCompleted}/>
     </div>
   );
 }
