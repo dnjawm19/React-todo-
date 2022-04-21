@@ -13,19 +13,16 @@ function Todo({todo, deleteTodo, goActive, goCompleted, save}) {
 
     function editAndCancle() {
         edit ? setEdit(false) : setEdit(true);
-        console.log(edit);
     }
 
     function onChange(e) {
         setValue(e.target.value);
-        console.log(e.target.value);
     }
 
     function onSubmit(e) {
         e.preventDefault();
         save(id, value);
         setValue("");
-        console.log(save);
         edit ? setEdit(false) : setEdit(true);
     }
 
@@ -38,24 +35,24 @@ function Todo({todo, deleteTodo, goActive, goCompleted, save}) {
     }
 
     return (
-        <div className="Todo">
+        <Container>
             {edit ?
-            <div className={`content ${checked ? 'checked' : ''}`}>
-                {checked ? <input type="button" onClick={changeActive}/> : <input type="checkbox" onClick={changeCompleted}/>}
+            <div>
+                {checked ? <input type="checkbox" onClick={changeActive}/> : <input type="checkbox" onClick={changeCompleted}/>}
                 <span>{text}</span>
                 <div>
-                    <button
-                        type="button"
+                    <Button
+                        className="white"
                         onClick={editAndCancle}
                     >
                         Edit
-                    </button>
-                    <button
-                        type="button"
+                    </Button>
+                    <Button
+                        className="red"
                         onClick={deleteClick}
                     >
                         Delete
-                    </button>
+                    </Button>
                 </div>
             </div>
             :
@@ -63,21 +60,38 @@ function Todo({todo, deleteTodo, goActive, goCompleted, save}) {
                 New name for {todo.text}
                 <input type="text" value={value} onChange={onChange}></input>
                 <div>
-                    <button
-                        type="submit"                        
-                    >
-                        Save
-                    </button>
-                    <button
-                        type="button"
+                    <Button
+                        className="white"
                         onClick={editAndCancle}
                     >
                         Cancle
-                    </button>
+                    </Button>
+                    <Button
+                        type="submit"                        
+                    >
+                        Save
+                    </Button>
                 </div>
             </form>}
-        </div>
+        </Container>
     )
 }
+
+const Container = styled.div`
+    width: 50%;
+    max-with: 100px;
+    font: 1.6rem/1.25 Arial, sans-serif;
+    padding: 0 20px;
+    margin-left: 10px;
+    background-color: white;
+    color: #4d4d4d;
+`
+
+const Button = styled.button`
+    margin-left: 10px;
+    color: ${props => props.children === 'Save' ? 'white' : props.children === 'Delete' ? 'white' : 'black'};
+    background-color: ${props => props.className === 'white' ? 'white' : props => props.className === 'red' ? 'red' : 'black'};
+    cursor: pointer;
+`
 
 export default Todo;
